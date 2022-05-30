@@ -6,6 +6,7 @@ Wordle is a popular word puzzle game hosted by https://www.nytimes.com/.<br>
 <br>
 I wrote a very basic Python program just for fun to help solve the Wordle puzzle.<br>
 <br>
+![alt text](https://github.com/arnocloete-za/wordle-solver/blob/master/image.png?raw=true)
 
 Example:<br>
 <br>
