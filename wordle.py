@@ -1,24 +1,30 @@
 # Requirement: sudo apt-get install wbritish
 # This will add the file: /usr/share/dict/words
+from english_words import english_words_set
 
-# Open the file
-file1 = open('/usr/share/dict/words', 'r')
+#e = english_words_set()
+#print()
+
+# replaced with english_words_set
+#file1 = open('/usr/share/dict/words', 'r')
 # Read all lines into Lines
-Lines = file1.readlines()
+#Lines = file1.readlines()
+#file1 = open('/usr/share/dict/words', 'r')
+# Read all lines into Lines
+#Lines = file1.readlines()
 
+all_words = english_words_set
 # default value
 correct = ""
 
 # loop forever until input from user is ! or press Control+c to stop
 list_of_words = []
-first_time = False
+first_time = True
  # Open the file
-file1 = open('/usr/share/dict/words', 'r')
-# Read all lines into Lines
-Lines = file1.readlines()
+
 availabe_words = []
 list_of_words = []
-for line in Lines:
+for line in all_words:
     # uppercase line for comparison purpose
     line = line.upper()
     line = line.strip('\n')
@@ -32,8 +38,13 @@ for line in Lines:
         continue
     list_of_words.append(line)
 
+
+
+#
+#
+
+availabe_words = list_of_words
 while correct != "!":
-    availabe_words = list_of_words
     list_of_words = []
     print("\nLOOP: Enter ! to exit")
 
@@ -63,17 +74,21 @@ while correct != "!":
             word_with_most_vowels.append(stats)
             remember_vowels = this_vowels
     # User input
-    print("Amount of possibilities to start with: " + str(len(availabe_words)))
-    print("Best choices with most vowels are a list of: " + str(len(word_with_most_vowels)))
-    stop = 0
-    for disp in word_with_most_vowels:
-        stop += 1
-        if stop == 20:
-            print("....")
-            amount = len(word_with_most_vowels) - 20
-            print("and " + str(amount) + " more.")
-            break
-        print(disp)
+    if first_time:
+        print("Amount of possibilities to start with: " + str(len(availabe_words)))
+        print("Best choices with most vowels are a list of: " + str(len(word_with_most_vowels)))
+        first_time = False
+        stop = 0
+        for disp in word_with_most_vowels:
+            stop += 1
+            if stop == 20:
+                print("....")
+                amount = len(word_with_most_vowels) - 20
+                print("and " + str(amount) + " more.")
+                break
+            print(disp)
+        # else:
+            # print("Words left to choose from:")
     correct = input("\nEnter the GREEN correct letters with # between: Example: a##le:\n")
 
 
@@ -163,12 +178,100 @@ while correct != "!":
     list_of_words = []
     count += 1
 
-    print("\nPossible words:")
-    for w in availabe_words:
-        print(w)
+    this_dictionary = {
+        'A': 0,
+        'B': 0,
+        'C': 0,
+        'D': 0,
+        'E': 0,
+        'F': 0,
+        'G': 0,
+        'H': 0,
+        'I': 0,
+        'J': 0,
+        'K': 0,
+        'L': 0,
+        'M': 0,
+        'N': 0,
+        'O': 0,
+        'P': 0,
+        'Q': 0,
+        'R': 0,
+        'S': 0,
+        'T': 0,
+        'U': 0,
+        'V': 0,
+        'W': 0,
+        'X': 0,
+        'Y': 0,
+        'Z': 0,
+    }
+
+    # exclude any characters that I already know is in the word:
+    remember_to_delete = []
+    for key in this_dictionary:
+        if key in correct:
+            remember_to_delete.append(key)
+        if key in include:
+            remember_to_delete.append(key)
+
+    for k in remember_to_delete:
+        del this_dictionary[k]
+    # count characters in words remaining
+    # available words stats:
+    for word in availabe_words:
+        for w in word:
+            for key in this_dictionary:
+                # print(key)
+                # print(this_dictionary[key])
+                if w == key:
+                    this_dictionary[key] += 1
+
+        # get list of most characters available left in word_list
+        max_char = 0
+        max_char_list = []
+        for key in this_dictionary:
+            if this_dictionary[key] > max_char:
+                max_char = this_dictionary[key]
+                max_char_list.clear()
+                max_char_list.append(key)
+            elif this_dictionary[key] == max_char:
+                max_char_list.append(key)
+
+    # print("max char list")
+    # print(max_char_list)
+
+    count_best = 0
+    best_word_list = []
+    # check words that has the popular chars in
+    for word in availabe_words:
+        count_matches = 0
+        for i in max_char_list:
+            if i in word:
+                # print("match")
+                # then add word to best list
+                count_matches += 1
+        if count_matches > 0:
+            if count_matches > count_best:
+                count_best = count_matches
+                best_word_list.clear()
+                best_word_list.append(word)
+            elif count_matches == count_best:
+                best_word_list.append(word)
+
     print("\nAmount of possibilities")
     print(len(availabe_words))
-    print(count)
+
+    print("Best word list")
+    print(best_word_list)
+
+    if len(best_word_list) < 10:
+        print("\nOther possible words:")
+        for w in availabe_words:
+            print(w)
+
+    #print(count)
+
 
 
 
