@@ -14,7 +14,7 @@ Example:<br>
 Enter correct letters, with # between: Example: a##le:<br>
 S###AM<br>
 Enter include letters: Example: tad:<br>
-R <br>
+#R####<br>
 Enter exclude letters: Example: tdp:<br>
 QWYUIOPDGH<br>
 <br>
